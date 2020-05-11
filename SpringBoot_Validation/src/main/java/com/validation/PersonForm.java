@@ -1,56 +1,94 @@
 package com.validation;
 
+import java.time.LocalDate;
+
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class PersonForm {
 
-	@NotNull
-	@Size(min = 2, max = 30)
-	private String name;
+	
+	public String getLastName() {
+		return lastName;
+	}
 
-	@NotNull
-	@Min(value = 18, message = "Id can't be less than 18 or bigger than 99")
-	@Max(99)
-	private Integer age;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
-    @NotNull
-    @NotBlank
-    @NotEmpty(message = "Phone number is required")
-    @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$",
-             message="Mobile number is invalid format")
-    private String mobilePhone;
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getMobilePhone() {
 		return mobilePhone;
 	}
-	
+
 	public void setMobilePhone(String mobilePhone) {
 		this.mobilePhone = mobilePhone;
 	}
 
-	public String getName() {
-		return this.name;
+	public LocalDate getBirthday() {
+		return birthday;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setBirthday(LocalDate birthday) {
+		this.birthday = birthday;
 	}
 
-	public Integer getAge() {
-		return age;
+	public String getCommPreference() {
+		return commPreference;
 	}
 
-	public void setAge(Integer age) {
-		this.age = age;
+	public void setCommPreference(String commPreference) {
+		this.commPreference = commPreference;
 	}
 
-	public String toString() {
-		return "Person(Name: " + this.name + ", Age: " + this.age + ")";
+	//@NotEmpty(message = "First Name is required")
+	@NotEmpty
+	@NotBlank
+	@NotNull
+	private String firstName;
+
+	public String getFirstName() {
+		return firstName;
 	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	@NotEmpty(message = "Last name is required")
+	private String lastName;
+
+	@NotEmpty(message = "Email is required")
+	@Email
+	private String email;
+
+	@NotEmpty(message = "Phone number is required")
+	@Pattern(regexp = "^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message = "Mobile number is invalid")
+	private String mobilePhone;
+
+	@Past
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private LocalDate birthday;
+
+	//@NotEmpty(message = "Communication preference is required")
+	//private String commPreference;
+	
+	@NotEmpty(message = "Communication preference is required")
+    @CommPreference
+    private String commPreference;
+    
+
 }

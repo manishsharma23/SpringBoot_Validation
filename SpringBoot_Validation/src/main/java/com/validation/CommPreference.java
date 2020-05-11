@@ -1,5 +1,6 @@
 package com.validation;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -8,17 +9,14 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
+@Target({ ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-@Constraint(validatedBy = { ValidGenderValidator.class })
-public @interface ValidGender {
-
-	String genderType();
-
-	String message() default "Gender is not valid";
+@Constraint(validatedBy = CommPreferenceValidator.class)
+@Documented
+public @interface CommPreference {
+	String message() default "Communication preference must be email or mobilePhone.";
 
 	Class<?>[] groups() default {};
 
 	Class<? extends Payload>[] payload() default {};
-
 }
